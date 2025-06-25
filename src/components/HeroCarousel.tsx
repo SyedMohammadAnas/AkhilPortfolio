@@ -45,6 +45,8 @@ const HeroCarousel: React.FC = () => {
   const [displayedIndex, setDisplayedIndex] = useState(0);
   // State for hovered nav item
   const [hoveredNav, setHoveredNav] = useState<number | null>(null);
+  // State for hover on 'More about ME' label
+  const [hoveredMe, setHoveredMe] = useState(false);
 
   // Effect to auto-advance the carousel every SLIDE_DURATION ms
   useEffect(() => {
@@ -125,25 +127,25 @@ const HeroCarousel: React.FC = () => {
         )}
       </AnimatePresence>
       {/* Navigation menu above numbers in bottom left (vertical layout, dot left) */}
-      <div className="absolute bottom-24 left-8 flex flex-col gap-3 z-20 select-none">
+      <div className="absolute bottom-24 left-8 flex flex-col gap-4 z-20 select-none">
         {navItems.map((item, idx) => (
           <div
             key={item}
-            className="flex flex-row items-center group cursor-pointer"
+            className="flex flex-row items-center group cursor-pointer min-h-[3.5rem]"
             onMouseEnter={() => setHoveredNav(idx)}
             onMouseLeave={() => setHoveredNav(null)}
           >
-            {/* White dot on hover, left of text */}
+            {/* White dot on hover, left of text, with extra margin */}
             <span
-              className={`h-2 w-2 rounded-full mr-3 transition-all duration-200 ${
+              className={`h-2 w-2 rounded-full mr-6 transition-all duration-200 ${
                 hoveredNav === idx ? 'bg-white opacity-100' : 'opacity-0'
               }`}
             />
             <span
-              className={`font-bold transition-all duration-200 ${
+              className={`font-bold transition-transform duration-200 ${
                 hoveredNav === idx
-                  ? `${libreCaslon.className} text-white text-2xl scale-110` // Libre Caslon, larger on hover
-                  : 'text-white text-2xl font-bold' // Helvetica Bold by default
+                  ? `${libreCaslon.className} text-white text-4xl scale-110` // Libre Caslon, scale up on hover
+                  : 'text-white text-4xl font-bold' // Helvetica Bold by default, fixed size
               }`}
               style={hoveredNav === idx ? {} : { fontFamily: 'Helvetica Bold, Helvetica, Arial, sans-serif' }}
             >
@@ -172,7 +174,7 @@ const HeroCarousel: React.FC = () => {
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-30 w-full">
         {/* Project name (Libre Caslon Display) */}
         <span
-          className={`mb-2 text-4xl text-white ${libreCaslon.className}`}
+          className={`mb-2 text-5xl text-white ${libreCaslon.className}`}
           style={{ letterSpacing: '0.02em' }}
         >
           {projectNames[displayedIndex]}
@@ -191,14 +193,30 @@ const HeroCarousel: React.FC = () => {
         </svg>
       </div>
       {/* More About me label at top right */}
-      <div className="absolute top-6 right-8 flex items-center gap-1 z-40 select-none">
+      <div
+        className="absolute top-6 right-8 flex items-center gap-1 z-40 select-none"
+        onMouseEnter={() => setHoveredMe(true)}
+        onMouseLeave={() => setHoveredMe(false)}
+      >
         <span
           className="text-white text-lg font-bold"
           style={{ fontFamily: 'Helvetica Bold, Helvetica, Arial, sans-serif' }}
         >
           More about
         </span>
-        <span className={`text-white text-2xl -mt-0.5 ${libreCaslon.className}`}>ME</span>
+        <span
+          className={`text-white text-2xl -mt-0.5 transition-all duration-200 ${hoveredMe ? libreCaslon.className : ''}`}
+          style={hoveredMe ? {} : { fontFamily: 'Helvetica Bold, Helvetica, Arial, sans-serif' }}
+        >
+          ME
+        </span>
+      </div>
+      {/* Top-left name branding */}
+      <div
+        className="fixed top-6 left-7 z-50 font-bold text-white text-2xl drop-shadow-lg select-none text-stroke-2 text-stroke-black"
+        style={{ fontFamily: 'Helvetica Bold, Helvetica, Arial, sans-serif' }}
+      >
+        Ganti Akhil Sai
       </div>
       {/* Optional: Add overlay or controls here if needed */}
     </div>
