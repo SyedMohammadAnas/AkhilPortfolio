@@ -27,6 +27,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Top-left name branding */}
+        <div
+          className="fixed top-6 left-7 z-50 font-bold text-white text-xl drop-shadow-lg select-none text-stroke-2 text-stroke-black"
+          style={{ fontFamily: 'Helvetica Bold, Helvetica, Arial, sans-serif' }}
+        >
+          Ganti Akhil Sai
+        </div>
         {children}
       </body>
     </html>
